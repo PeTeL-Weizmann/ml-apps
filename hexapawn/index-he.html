@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e7" />
+    <title>Hexapawn — מכונה שלומדת</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header has-institute-logo">
+      <a class="wordmark" href="#top" aria-label="Hexapawn — דף הבית">
+        <span>HEXAPAWN</span>
+      </a>
+      <img
+        class="weizmann-logo"
+        src="assets/weizmann-logo.jpg"
+        alt="מכון ויצמן למדע"
+        width="1200"
+        height="627"
+      />
+      <div class="learning-badge"><span></span> הלמידה פעילה</div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="eyebrow">משחק זעיר · מכונה שבאמת לומדת</div>
+        <h1>האם תוכלו ללמד<br />מכונה לנצח אתכם?</h1>
+        <p class="intro">
+          אתם משחקים בכלים הלבנים שבתחתית הלוח והמהלך הראשון שלכם.
+          הכלים השחורים זוכרים את תוצאות המהלכים שביצעו ומשפרים את ההחלטות בהתאם.
+        </p>
+      </section>
+
+      <section class="playground" aria-label="משחק Hexapawn המדגים למידת חיזוק">
+        <div class="game-panel">
+          <div class="turn-line">
+            <div>
+              <span class="turn-label">מי משחק עכשיו?</span>
+              <strong id="turnText">התור שלך</strong>
+            </div>
+            <button class="new-game-button" id="newGameButton" type="button">↖ משחק חדש</button>
+          </div>
+
+          <div class="opponent-label">
+            <span class="piece-mini black-piece" aria-hidden="true"></span>
+            <span>המכונה הלומדת</span>
+          </div>
+
+          <div class="board-coordinate-frame">
+            <div class="column-labels" aria-hidden="true">
+              <span>א</span><span>ב</span><span>ג</span>
+            </div>
+            <div class="board-wrap">
+              <div class="board" id="board" role="grid" aria-label="לוח Hexapawn"></div>
+              <div class="thinking" id="thinking" aria-live="polite">
+                <span></span><span></span><span></span>
+                <b>חושבת</b>
+              </div>
+            </div>
+            <div class="row-labels" aria-hidden="true">
+              <span>3</span><span>2</span><span>1</span>
+            </div>
+          </div>
+
+          <div class="player-label">
+            <span class="piece-mini white-piece" aria-hidden="true"></span>
+            <span>אתם · משחקים ראשונים</span>
+          </div>
+
+          <div class="status-card" id="statusCard" aria-live="polite">
+            <span class="status-number">01</span>
+            <div>
+              <strong id="statusTitle">המהלך שלכם</strong>
+              <p id="statusBody">בחרו כלי לבן, ואז בחרו משבצת מודגשת.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="brain-panel" aria-labelledby="brainTitle">
+          <div class="brain-heading">
+            <div>
+              <div class="eyebrow">מה קורה בתוך המכונה?</div>
+              <h2 id="brainTitle">המחברת הקטנה שלה</h2>
+            </div>
+            <div class="brain-count"><strong id="statesCount">0</strong><span>מצבי לוח<br />שנשמרו</span></div>
+          </div>
+
+          <p class="brain-intro" id="brainIntro">
+            כאשר לשחור יש כמה אפשרויות, המכונה מתחילה עם סיכוי שווה לכל מהלך חוקי.
+          </p>
+
+          <div class="memory-box">
+            <div class="memory-topline">
+              <span id="memoryLabel">עוד לא התקבלה החלטה</span>
+              <span>סיכוי</span>
+            </div>
+            <div id="memoryMoves" class="memory-moves">
+              <div class="empty-memory">
+                <span class="empty-mark">?</span>
+                <p>האפשרויות של השחור יופיעו כאן אחרי המהלך הראשון שלכם.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson" id="lesson">
+            <span class="lesson-icon">↳</span>
+            <p><strong>לא תוכנתה שום אסטרטגיה.</strong> המכונה מכירה רק את החוקים ומתאימה את הבחירות שלה לאחר כל משחק.</p>
+          </div>
+
+          <div class="scoreboard" aria-label="תוצאות">
+            <div><span>משחקים</span><strong id="gamesStat">0</strong></div>
+            <div><span>אתם</span><strong id="humanStat">0</strong></div>
+            <div><span>המכונה</span><strong id="aiStat">0</strong></div>
+          </div>
+
+          <div class="brain-actions">
+            <button class="primary-button" id="practiceButton" type="button">
+              <span>אימון מהיר</span><small>המכונה תשחק 20 משחקים</small>
+            </button>
+            <button class="reset-button" id="resetBrainButton" type="button">מחיקת הזיכרון</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="how-it-learns" aria-labelledby="howTitle">
+        <div>
+          <div class="eyebrow">למידת חיזוק בגרסה זעירה</div>
+          <h2 id="howTitle">שלושה כללים. זה כל השיעור.</h2>
+        </div>
+        <ol>
+          <li><span>01</span><div><strong>מנסים</strong><p>המכונה בוחרת מבין המהלכים החוקיים. מהלך עם פס גבוה יותר ייבחר בסבירות גבוהה יותר.</p></div></li>
+          <li><span>02</span><div><strong>מקבלים משוב</strong><p>ניצחון הוא פרס, והפסד הוא עונש. אף אחד לא מגלה למכונה מהו המהלך ״הנכון״.</p></div></li>
+          <li><span>03</span><div><strong>מתאימים</strong><p>המכונה מגדילה או מקטינה את משקל המהלכים שביצעה, וכך משנה את הבחירה הבאה שלה.</p></div></li>
+        </ol>
+      </section>
+
+      <section class="rules" aria-labelledby="rulesTitle">
+        <div>
+          <div class="eyebrow">איך משחקים?</div>
+          <h2 id="rulesTitle"><span dir="ltr">Hexapawn</span><br />הוא משחק שחמט<br />שמזוקק לתשע משבצות.</h2>
+        </div>
+        <div class="rule-copy">
+          <p>מתקדמים משבצת אחת ישר אל משבצת פנויה. אוכלים כלי במשבצת אלכסונית סמוכה, כמו רגלי בשחמט.</p>
+          <div class="win-conditions">
+            <strong>מנצחים באחת משלוש דרכים:</strong>
+            <ul>
+              <li>מגיעים לקצה הנגדי של הלוח.</li>
+              <li>אוכלים את כל כלי היריב.</li>
+              <li>משאירים את היריב ללא מהלך חוקי.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>HEXAPAWN</span>
+      <p>הדגמה אינטראקטיבית קטנה של למידת חיזוק.</p>
+      <a href="#top">חזרה למעלה ↑</a>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
